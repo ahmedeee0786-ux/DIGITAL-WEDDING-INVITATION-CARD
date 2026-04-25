@@ -176,6 +176,13 @@ function applyCardData() {
     initCountdown();
 }
 
+function formatForDatePicker(dateStr) {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
+    const pad = (n) => n.toString().padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
 function loadHostInputs() {
     const fields = {
         'input-music': cardData.music,
@@ -183,7 +190,7 @@ function loadHostInputs() {
         'input-guest-name': cardData.guestName,
         'input-groom-name': cardData.groomName,
         'input-bride-name': cardData.brideName,
-        'input-targetDate': cardData.targetDate,
+        'input-targetDate': formatForDatePicker(cardData.targetDate),
         'input-event1-title': cardData.event1.title,
         'input-event1-date': cardData.event1.date,
         'input-event1-time': cardData.event1.time,
