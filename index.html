@@ -162,6 +162,14 @@
         </div>
 
         <div class="input-group">
+            <label>Card Language</label>
+            <select id="input-lang" onchange="updateField('lang', this.value)">
+                <option value="ur">Urdu (اردو)</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <div class="input-group">
             <label>Background Music</label>
             <select id="input-music" onchange="updateField('music', this.value)">
                 <option value="1">Song 1 (music1.mp3)</option>

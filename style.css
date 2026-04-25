@@ -954,6 +954,15 @@ body {
     font-size: 1.2rem;
 }
 
+.urdu-font {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    direction: rtl;
+}
+
+.urdu-font .couple-name {
+    line-height: 1.8;
+}
+
 /* RSVP SECTION STYLES */
 .rsvp-section {
     margin: 40px 0;
