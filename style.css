@@ -80,6 +80,53 @@ body.theme-copper {
     --card-bg: rgba(61, 28, 28, 0.95);
 }
 
+/* ANIMATIONS FOR OPENING THE CARD */
+.card-inside.show {
+    animation: fadeInScale 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* Theme Specific Animations */
+.theme-royal-blue .card-inside.show {
+    animation: slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.theme-luxury .card-inside.show {
+    animation: luxuryZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.theme-maroon .card-inside.show {
+    animation: curtainReveal 1.5s ease-out forwards;
+}
+
+.theme-copper .card-inside.show {
+    animation: rotateIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes fadeInScale {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes luxuryZoom {
+    0% { opacity: 0; transform: scale(1.2); filter: blur(10px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+
+@keyframes curtainReveal {
+    0% { opacity: 0; clip-path: inset(0 50% 0 50%); }
+    100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes rotateIn {
+    0% { opacity: 0; transform: rotateX(-30deg) scale(0.8); }
+    100% { opacity: 1; transform: rotateX(0) scale(1); }
+}
+
 body.theme-ocean {
     --primary-bg: #083344;
     --primary-bg-light: #155e75;
