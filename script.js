@@ -67,7 +67,7 @@ function openCard() {
     if (cover && inside) { 
         cover.classList.add('opened'); 
         inside.classList.remove('hidden'); 
-        inside.classList.add('show'); 
+        setTimeout(() => inside.classList.add('show'), 10);
     }
     if (music && !isMusicPlaying) {
         music.src = `music${cardData.music}.mp3`;
@@ -130,7 +130,7 @@ function applyCardData() {
     if(document.getElementById('guest-welcome')) document.getElementById('guest-welcome').innerText = `${L.welcome}${cardData.guestName}!`;
     if(document.querySelector('.subtitle')) document.querySelector('.subtitle').innerText = L.together;
     if(document.querySelector('.quote')) document.querySelector('.quote').innerText = L.quote;
-    if(document.querySelector('.pulsing-button span')) document.querySelector('.pulsing-button span').innerText = L.tap;
+    if(document.querySelector('.pulsing-button')) document.querySelector('.pulsing-button').innerText = L.tap;
     if(document.querySelector('.invitation-text')) document.querySelector('.invitation-text').innerText = L.saveDate;
     if(document.getElementById('request-text')) document.getElementById('request-text').innerText = L.request;
     if(document.querySelector('.countdown-title')) document.querySelector('.countdown-title').innerText = L.bigDay;
