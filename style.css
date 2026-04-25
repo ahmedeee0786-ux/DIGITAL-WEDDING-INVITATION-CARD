@@ -777,7 +777,7 @@ body {
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(15px);
     border-left: 1px solid var(--accent-color);
-    z-index: 2000;
+    z-index: 3000;
     padding: 2rem;
     color: white;
     transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
