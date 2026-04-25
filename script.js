@@ -4,14 +4,14 @@
 let cardData = {
     theme: 'teal',
     music: '1',
-    lang: 'ur', // NEW: 'ur' or 'en'
+    lang: 'ur',
     guestName: 'Guest',
     groomName: 'Groom Name',
     brideName: 'Bride Name',
-    targetDate: "April 24, 2026 14:00:00",
-    event1: { title: 'سہرا بندی', date: '23rd April, 2026', time: 'At 1:00 AM' },
-    event2: { title: 'بارات', date: '23rd April, 2026', time: 'At 2:00 AM' },
-    event3: { title: 'ولیمہ', date: '24th April, 2026', time: 'At 2:00 AM', location: 'Shadi Hall / Marquee Name', mapUrl: '' },
+    targetDate: "2026-04-24T14:00",
+    event1: { title: 'سہرا بندی', date: '2026-04-23', time: 'At 1:00 AM' },
+    event2: { title: 'بارات', date: '2026-04-23', time: 'At 2:00 AM' },
+    event3: { title: 'ولیمہ', date: '2026-04-24', time: 'At 2:00 AM', location: 'Shadi Hall / Marquee Name', mapUrl: '' },
     host1: { label: 'زیرِ اہتمام', name: 'Host Name' },
     host2: { label: 'خصوصی شرکت (والدِ عروس)', name: 'Special Guest Name' },
     hostWhatsapp: '+920000000000'
@@ -106,11 +106,18 @@ function initApp() {
     initBackground();
 }
 
+function formatFriendlyDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return d.toLocaleDateString(cardData.lang === 'ur' ? 'ur-PK' : 'en-US', options);
+}
+
 function applyCardData() {
     Array.from(document.body.classList).forEach(cls => { if (cls.startsWith('theme-')) document.body.classList.remove(cls); });
     if (cardData.theme && cardData.theme !== 'teal') document.body.classList.add(`theme-${cardData.theme}`);
     
-    // Set Language specific labels
     const L = UI_LABELS[cardData.lang] || UI_LABELS.en;
     document.body.setAttribute('lang', cardData.lang);
     if (cardData.lang === 'ur') document.body.classList.add('urdu-font');
@@ -149,15 +156,15 @@ function applyCardData() {
     if(document.getElementById('inside-bride-name')) document.getElementById('inside-bride-name').innerText = cardData.brideName;
     
     if(document.getElementById('event1-title')) document.getElementById('event1-title').innerText = cardData.event1.title;
-    if(document.getElementById('event1-date')) document.getElementById('event1-date').innerText = cardData.event1.date;
+    if(document.getElementById('event1-date')) document.getElementById('event1-date').innerText = formatFriendlyDate(cardData.event1.date);
     if(document.getElementById('event1-time')) document.getElementById('event1-time').innerText = cardData.event1.time;
     
     if(document.getElementById('event2-title')) document.getElementById('event2-title').innerText = cardData.event2.title;
-    if(document.getElementById('event2-date')) document.getElementById('event2-date').innerText = cardData.event2.date;
+    if(document.getElementById('event2-date')) document.getElementById('event2-date').innerText = formatFriendlyDate(cardData.event2.date);
     if(document.getElementById('event2-time')) document.getElementById('event2-time').innerText = cardData.event2.time;
     
     if(document.getElementById('event3-title')) document.getElementById('event3-title').innerText = cardData.event3.title;
-    if(document.getElementById('event3-date')) document.getElementById('event3-date').innerText = cardData.event3.date;
+    if(document.getElementById('event3-date')) document.getElementById('event3-date').innerText = formatFriendlyDate(cardData.event3.date);
     if(document.getElementById('event3-time')) document.getElementById('event3-time').innerText = cardData.event3.time;
     if(document.getElementById('event3-location')) document.getElementById('event3-location').innerText = cardData.event3.location;
     
@@ -177,10 +184,14 @@ function applyCardData() {
 }
 
 function formatForDatePicker(dateStr) {
+    if (!dateStr) return '';
     const d = new Date(dateStr);
     if (isNaN(d.getTime())) return '';
     const pad = (n) => n.toString().padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    if (dateStr.includes('T')) {
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
 }
 
 function loadHostInputs() {
@@ -192,13 +203,13 @@ function loadHostInputs() {
         'input-bride-name': cardData.brideName,
         'input-targetDate': formatForDatePicker(cardData.targetDate),
         'input-event1-title': cardData.event1.title,
-        'input-event1-date': cardData.event1.date,
+        'input-event1-date': formatForDatePicker(cardData.event1.date),
         'input-event1-time': cardData.event1.time,
         'input-event2-title': cardData.event2.title,
-        'input-event2-date': cardData.event2.date,
+        'input-event2-date': formatForDatePicker(cardData.event2.date),
         'input-event2-time': cardData.event2.time,
         'input-event3-title': cardData.event3.title,
-        'input-event3-date': cardData.event3.date,
+        'input-event3-date': formatForDatePicker(cardData.event3.date),
         'input-event3-time': cardData.event3.time,
         'input-event3-location': cardData.event3.location,
         'input-event3-mapUrl': cardData.event3.mapUrl,
@@ -215,7 +226,6 @@ function updateField(id, value) {
     if (id === 'music') cardData.music = value;
     if (id === 'lang') {
         cardData.lang = value;
-        // Auto-translate default values if they haven't been changed
         if (value === 'en') {
             if (cardData.event1.title === 'سہرا بندی') cardData.event1.title = 'Sehra Bandi';
             if (cardData.event2.title === 'بارات') cardData.event2.title = 'Baraat';
