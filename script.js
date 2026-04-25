@@ -110,8 +110,14 @@ function applyCardData() {
 
     if(document.getElementById('host1-label')) document.getElementById('host1-label').innerText = cardData.host1.label;
     if(document.getElementById('host1-name')) document.getElementById('host1-name').innerText = cardData.host1.name;
-    if(document.getElementById('host2-label')) document.getElementById('host2-label').innerText = cardData.host2.label;
     if(document.getElementById('host2-name')) document.getElementById('host2-name').innerText = cardData.host2.name;
+
+    // Update browser tab title dynamically
+    document.title = `Wedding Invitation | ${cardData.groomName}`;
+    
+    // Update Social Media Preview Title
+    const ogTitle = document.getElementById('og-title');
+    if (ogTitle) ogTitle.setAttribute('content', `Wedding Invitation | ${cardData.groomName}`);
 
     initCountdown();
 }
