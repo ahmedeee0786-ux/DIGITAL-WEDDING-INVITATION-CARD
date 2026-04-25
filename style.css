@@ -146,6 +146,49 @@ body.theme-copper {
     animation: float-gentle 6s infinite ease-in-out;
 }
 
+/* --- GLOWING FLOWERS --- */
+.glowing-flower {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, var(--accent-color) 0%, transparent 70%);
+    opacity: 0.2;
+    filter: blur(30px);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+    animation: pulse-glow 4s infinite ease-in-out;
+}
+
+.fl-1 { top: 10%; left: 5%; animation-delay: 0s; }
+.fl-2 { top: 15%; right: 5%; animation-delay: 1s; }
+.fl-3 { bottom: 20%; left: 10%; animation-delay: 2s; }
+.fl-4 { bottom: 15%; right: 10%; animation-delay: 3s; }
+
+@keyframes pulse-glow {
+    0%, 100% { transform: scale(1); opacity: 0.15; filter: blur(30px); }
+    50% { transform: scale(1.3); opacity: 0.3; filter: blur(40px); }
+}
+
+.card-inside.show .glowing-flower {
+    animation: pulse-glow 4s infinite ease-in-out, reveal-flower 2s ease-out forwards;
+}
+
+@keyframes reveal-flower {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 0.2; }
+}
+
+body.theme-royal-blue .glowing-flower { background: radial-gradient(circle, #ffd700 0%, transparent 70%); }
+body.theme-luxury .glowing-flower { background: radial-gradient(circle, #d4af37 0%, transparent 70%); }
+body.theme-maroon .glowing-flower { background: radial-gradient(circle, #eedc82 0%, transparent 70%); }
+body.theme-ocean .glowing-flower { background: radial-gradient(circle, #22d3ee 0%, transparent 70%); }
+body.theme-midnight .glowing-flower { background: radial-gradient(circle, #94a3b8 0%, transparent 70%); }
+body.theme-emerald .glowing-flower { background: radial-gradient(circle, #fbbf24 0%, transparent 70%); }
+body.theme-royal .glowing-flower { background: radial-gradient(circle, #8b6e3d 0%, transparent 70%); }
+body.theme-vintage .glowing-flower { background: radial-gradient(circle, #5d4037 0%, transparent 70%); }
+body.theme-copper .glowing-flower { background: radial-gradient(circle, #b87333 0%, transparent 70%); }
+
 body.theme-ocean {
     --primary-bg: #083344;
     --primary-bg-light: #155e75;
