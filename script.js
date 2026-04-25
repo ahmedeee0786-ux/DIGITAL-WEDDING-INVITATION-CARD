@@ -64,7 +64,11 @@ function openCard() {
     const inside = document.getElementById('card-inside');
     const music = document.getElementById('bg-music');
     const musicBtn = document.getElementById('music-toggle');
-    if (cover && inside) { cover.style.display = 'none'; inside.classList.remove('hidden'); inside.classList.add('show'); }
+    if (cover && inside) { 
+        cover.classList.add('opened'); 
+        inside.classList.remove('hidden'); 
+        inside.classList.add('show'); 
+    }
     if (music && !isMusicPlaying) {
         music.src = `music${cardData.music}.mp3`;
         music.play().then(() => { isMusicPlaying = true; if (musicBtn) musicBtn.classList.add('playing'); }).catch(e => console.log("Autoplay prevented:", e));
