@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation | Muhammad Sultan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&family=Great+Vibes&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="lighting-strips left"></div>
+    <div class="lighting-strips right"></div>
+    <div class="container">
+        <!-- Layout 1: The Cover -->
+        <div id="card-cover" class="card-cover">
+            <div class="mandala-top-container"></div>
+            <div class="side-lines-left"></div>
+            <div class="side-lines-right"></div>
+            <div class="inner-border"></div>
+            <div class="cover-content">
+                <p id="guest-welcome" class="guest-welcome-text">Warmest Welcome!</p>
+                <h2 class="subtitle">Together with our families</h2>
+                <h1 id="cover-couple-name" class="couple-name shimmer">
+                    <span id="display-groom-name">Groom Name</span>
+                    <span class="ampersand">&</span>
+                    <span id="display-bride-name">Bride Name</span>
+                </h1>
+                <p class="quote">"And We created you in pairs." (78:8)</p>
+                <div class="tap-to-open" onclick="openCard()">
+                    <div class="pulsing-button">
+                        <span>Tap to Open</span>
+                    </div>
+                </div>
+                <div class="developer-credit">
+                    Developed by Ahmed.i • <a href="tel:+923462685489" class="dev-link">+92 3462685489</a>
+                </div>
+            </div>
+            <div class="mandala-bottom"></div>
+        </div>
+
+        <!-- Layout 2: The Inside -->
+        <div id="card-inside" class="card-inside hidden">
+            <div class="mandala-top-container"></div>
+            <div class="side-lines-left"></div>
+            <div class="side-lines-right"></div>
+            <div class="card-content">
+                <header>
+                    <h3 class="invitation-text">Save the Date</h3>
+                    <h1 class="groom-name">
+                        <span id="inside-groom-name">Groom Name</span>
+                        <span class="ampersand small">&</span>
+                        <span id="inside-bride-name">Bride Name</span>
+                    </h1>
+                    <p id="request-text" class="request-text">With the Grace of Allah, we cordially invite you to join us on the auspicious occasion of the wedding ceremony.</p>
+                </header>
+
+                <div class="event-details">
+                    <!-- Sehra Bandi -->
+                    <div class="event-card animate-up" style="--delay: 0.2s">
+                        <div class="event-icon">⚖️</div>
+                        <h3 id="event1-title" class="event-title">سہرا بندی</h3>
+                        <p id="event1-date" class="date">23rd April, 2026</p>
+                        <p id="event1-time" class="time">At 1:00 AM</p>
+                    </div>
+
+                    <!-- Baraat -->
+                    <div class="event-card animate-up" style="--delay: 0.4s">
+                        <div class="event-icon">🐎</div>
+                        <h3 id="event2-title" class="event-title">بارات</h3>
+                        <p id="event2-date" class="date">23rd April, 2026</p>
+                        <p id="event2-time" class="time">At 2:00 AM</p>
+                    </div>
+
+                    <!-- Walima -->
+                    <div class="event-card animate-up highlight" style="--delay: 0.6s">
+                        <div class="event-icon">🍽️</div>
+                        <h3 id="event3-title" class="event-title urdu">ولیمہ</h3>
+                        <p id="event3-date" class="date">24th April, 2026</p>
+                        <p id="event3-time" class="time">At 2:00 AM</p>
+                        <div class="location-container">
+                            <span class="location-icon">📍</span>
+                            <p id="event3-location" class="location-text urdu">Shadi Hall / Marquee Name</p>
+                        </div>
+                        <a id="map-button" href="#" target="_blank" class="map-link-btn" style="display:none;">
+                            <span>View on Maps</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Countdown -->
+                <div class="countdown-container animate-up" style="--delay: 0.8s">
+                    <h3 class="countdown-title">The Big Day Starts In</h3>
+                    <div class="countdown">
+                        <div class="time-block"><span id="days">00</span><small>Days</small></div>
+                        <div class="time-block"><span id="hours">00</span><small>Hrs</small></div>
+                        <div class="time-block"><span id="minutes">00</span><small>Min</small></div>
+                        <div class="time-block"><span id="seconds">00</span><small>Sec</small></div>
+                    </div>
+                </div>
+
+                <!-- RSVP SECTION -->
+                <div class="rsvp-section animate-up" style="--delay: 1s">
+                    <h3 class="rsvp-title">Kindly RSVP</h3>
+                    <p class="rsvp-subtitle">Please let us know if you're coming!</p>
+                    <div class="rsvp-buttons">
+                        <button class="rsvp-btn yes" onclick="sendRSVP('I am coming!')">I am coming</button>
+                        <button class="rsvp-btn maybe" onclick="sendRSVP('I am not sure yet.')">Maybe</button>
+                        <button class="rsvp-btn no" onclick="sendRSVP('Sorry, I cannot make it.')">Cannot attend</button>
+                    </div>
+                </div>
+
+                <div class="hosts-section animate-up" style="--delay: 1.2s">
+                    <div class="host-box">
+                        <span id="host1-label" class="host-label">زیرِ اہتمام</span>
+                        <h4 id="host1-name" class="host-name">Host Name</h4>
+                    </div>
+                    <div class="host-divider"></div>
+                    <div class="host-box">
+                        <span id="host2-label" class="host-label">خصوصی شرکت (والدِ عروس)</span>
+                        <h4 id="host2-name" class="host-name">Special Guest Name</h4>
+                    </div>
+                </div>
+                <div class="developer-credit inside">
+                    Developed by Ahmed.i • <a href="tel:+923462685489" class="dev-link">+92 3462685489</a>
+                </div>
+            </div>
+            <div class="mandala-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Host Panel -->
+    <div id="host-panel" class="host-panel">
+        <div class="panel-header">
+            <h3>Card Customizer</h3>
+            <button class="close-panel" onclick="toggleHostPanel()">×</button>
+        </div>
+
+        <div class="input-group">
+            <label>Themes (10 Traditional Options)</label>
+            <div class="theme-swatches">
+                <div class="swatch teal active" onclick="setTheme('teal', this)"></div>
+                <div class="swatch maroon" onclick="setTheme('maroon', this)"></div>
+                <div class="swatch midnight" onclick="setTheme('midnight', this)"></div>
+                <div class="swatch emerald" onclick="setTheme('emerald', this)"></div>
+                <div class="swatch luxury" onclick="setTheme('luxury', this)"></div>
+                <div class="swatch royal" onclick="setTheme('royal', this)"></div>
+                <div class="swatch vintage" onclick="setTheme('vintage', this)"></div>
+                <div class="swatch ocean" onclick="setTheme('ocean', this)"></div>
+                <div class="swatch royal-blue" onclick="setTheme('royal-blue', this)"></div>
+                <div class="swatch copper" onclick="setTheme('copper', this)"></div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Background Music</label>
+            <select id="input-music" onchange="updateField('music', this.value)">
+                <option value="1">Song 1 (music1.mp3)</option>
+                <option value="2">Song 2 (music2.mp3)</option>
+                <option value="3">Song 3 (music3.mp3)</option>
+                <option value="4">Song 4 (music4.mp3)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Personalize (Guest Name)</label>
+            <input type="text" id="input-guest-name" oninput="updateField('guestName', this.value)" placeholder="Enter Guest Name">
+        </div>
+
+        <div class="input-group">
+            <label>Couple Names</label>
+            <input type="text" id="input-groom-name" oninput="updateField('groomName', this.value)" placeholder="Groom Name">
+            <input type="text" id="input-bride-name" oninput="updateField('brideName', this.value)" placeholder="Bride Name">
+        </div>
+
+        <div class="input-group">
+            <label>RSVP WhatsApp Number (e.g. +923001234567)</label>
+            <input type="text" id="input-host-whatsapp" oninput="updateField('hostWhatsapp', this.value)" placeholder="+92xxxxxxxxxx">
+        </div>
+
+        <div class="input-group">
+            <label>Event 1 (Sehra Bandi)</label>
+            <input type="text" id="input-event1-title" oninput="updateField('event1-title', this.value)" placeholder="Title">
+            <input type="text" id="input-event1-date" oninput="updateField('event1-date', this.value)" placeholder="Date">
+            <input type="text" id="input-event1-time" oninput="updateField('event1-time', this.value)" placeholder="Time">
+        </div>
+
+        <div class="input-group">
+            <label>Event 2 (Baraat)</label>
+            <input type="text" id="input-event2-title" oninput="updateField('event2-title', this.value)" placeholder="Title">
+            <input type="text" id="input-event2-date" oninput="updateField('event2-date', this.value)" placeholder="Date">
+            <input type="text" id="input-event2-time" oninput="updateField('event2-time', this.value)" placeholder="Time">
+        </div>
+
+        <div class="input-group">
+            <label>Event 3 (Walima)</label>
+            <input type="text" id="input-event3-title" oninput="updateField('event3-title', this.value)" placeholder="Title">
+            <input type="text" id="input-event3-date" oninput="updateField('event3-date', this.value)" placeholder="Date">
+            <input type="text" id="input-event3-time" oninput="updateField('event3-time', this.value)" placeholder="Time">
+            <input type="text" id="input-event3-location" oninput="updateField('event3-location', this.value)" placeholder="Shadi Hall / Marquee Name">
+            <input type="text" id="input-event3-mapUrl" oninput="updateField('event3-mapUrl', this.value)" placeholder="Google Maps Link">
+        </div>
+
+        <div class="input-group">
+            <label>Countdown (Target Date)</label>
+            <input type="text" id="input-targetDate" oninput="updateField('targetDate', this.value)" placeholder="April 24, 2026 14:00:00">
+        </div>
+
+        <div class="input-group">
+            <label>Hosts (Labels & Names)</label>
+            <input type="text" id="input-host1-label" oninput="updateField('host1-label', this.value)" placeholder="Host Label 1">
+            <input type="text" id="input-host1-name" oninput="updateField('host1-name', this.value)" placeholder="Host Name 1">
+            <input type="text" id="input-host2-label" oninput="updateField('host2-label', this.value)" placeholder="Host Label 2">
+            <input type="text" id="input-host2-name" oninput="updateField('host2-name', this.value)" placeholder="Host Name 2">
+        </div>
+
+        <div class="share-actions">
+            <button class="action-btn share-wa" onclick="shareOnWhatsapp()">Share on WhatsApp</button>
+            <button class="action-btn copy-btn" onclick="copyLink()">Copy Secret Link</button>
+        </div>
+    </div>
+
+    <!-- Music Controls -->
+    <button id="music-toggle" onclick="toggleMusic()">
+        <span class="music-icon">🎵</span>
+    </button>
+    <audio id="bg-music" loop preload="auto"></audio>
+
+    <!-- Host Mode Toggle -->
+    <button id="edit-toggle" onclick="toggleHostPanel()">Edit Your Card</button>
+
+    <div id="bg-animations" class="bg-animations"></div>
+    <script src="script.js"></script>
+</body>
+</html>
