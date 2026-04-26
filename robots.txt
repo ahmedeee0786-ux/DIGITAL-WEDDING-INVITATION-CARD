@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ahmedeeee0786-ux.github.io/DIGITAL-WEDDING-INVITATION-CARD/sitemap.xml
+Sitemap: https://ahmedeee0786-ux.github.io/DIGITAL-WEDDING-INVITATION-CARD/sitemap.xml
