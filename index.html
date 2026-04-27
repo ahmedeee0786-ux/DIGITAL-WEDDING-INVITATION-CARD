@@ -23,6 +23,7 @@
     <div class="container">
         <!-- Layout 1: The Cover -->
         <div id="card-cover" class="card-cover">
+            <div class="pulsing-flower"></div>
             <div class="mandala-top-container"></div>
             <div class="side-lines-left"></div>
             <div class="side-lines-right"></div>
@@ -37,14 +38,10 @@
                 </h1>
                 <p class="quote">"And We created you in pairs." (78:8)</p>
                 <div class="tap-to-open" onclick="openCard()">
-                    <div class="pulsing-button">
-                        <span>Tap to Open</span>
-                    </div>
-                </div>
-                <div class="developer-credit">
-                    Developed by Ahmed.i • <a href="tel:+923462685489" class="dev-link">+92 3462685489</a>
+                    <button class="pulsing-button">Tap to Open</button>
                 </div>
             </div>
+            <div class="developer-credit">Developed by Ahmed.i | +92 3462685489</div>
             <div class="mandala-bottom"></div>
         </div>
 
@@ -53,6 +50,13 @@
             <div class="mandala-top-container"></div>
             <div class="side-lines-left"></div>
             <div class="side-lines-right"></div>
+            
+            <!-- GLOWING FLOWERS -->
+            <div class="glowing-flower fl-1"></div>
+            <div class="glowing-flower fl-2"></div>
+            <div class="glowing-flower fl-3"></div>
+            <div class="glowing-flower fl-4"></div>
+
             <div class="card-content">
                 <header>
                     <h3 class="invitation-text">Save the Date</h3>
@@ -94,6 +98,7 @@
                         <a id="map-button" href="#" target="_blank" class="map-link-btn" style="display:none;">
                             <span>View on Maps</span>
                         </a>
+                        <div id="additional-events-display"></div>
                     </div>
                 </div>
 
@@ -196,26 +201,30 @@
         </div>
 
         <div class="input-group">
-            <label>Event 1 (Sehra Bandi)</label>
-            <input type="text" id="input-event1-title" oninput="updateField('event1-title', this.value)" placeholder="Title">
+            <label id="label-event1">Event 1 (Sehra Bandi)</label>
             <input type="date" id="input-event1-date" oninput="updateField('event1-date', this.value)">
-            <input type="text" id="input-event1-time" oninput="updateField('event1-time', this.value)" placeholder="Time">
+            <input type="text" id="input-event1-time" oninput="updateField('event1-time', this.value)" placeholder="Time (e.g. At 1:00 AM)">
         </div>
 
         <div class="input-group">
-            <label>Event 2 (Baraat)</label>
-            <input type="text" id="input-event2-title" oninput="updateField('event2-title', this.value)" placeholder="Title">
+            <label id="label-event2">Event 2 (Baraat)</label>
             <input type="date" id="input-event2-date" oninput="updateField('event2-date', this.value)">
-            <input type="text" id="input-event2-time" oninput="updateField('event2-time', this.value)" placeholder="Time">
+            <input type="text" id="input-event2-time" oninput="updateField('event2-time', this.value)" placeholder="Time (e.g. At 2:00 AM)">
         </div>
 
         <div class="input-group">
-            <label>Event 3 (Walima)</label>
-            <input type="text" id="input-event3-title" oninput="updateField('event3-title', this.value)" placeholder="Title">
+            <label id="label-event3">Event 3 (Walima)</label>
             <input type="date" id="input-event3-date" oninput="updateField('event3-date', this.value)">
-            <input type="text" id="input-event3-time" oninput="updateField('event3-time', this.value)" placeholder="Time">
+            <input type="text" id="input-event3-time" oninput="updateField('event3-time', this.value)" placeholder="Time (e.g. At 2:00 AM)">
             <input type="text" id="input-event3-location" oninput="updateField('event3-location', this.value)" placeholder="Shadi Hall / Marquee Name">
             <input type="text" id="input-event3-mapUrl" oninput="updateField('event3-mapUrl', this.value)" placeholder="Google Maps Link">
+        </div>
+
+        <!-- Additional Events Section -->
+        <div class="input-group">
+            <label>Additional Events (Optional)</label>
+            <div id="additional-events-container"></div>
+            <button class="add-event-btn" onclick="addExtraEvent()">+ Add More Event</button>
         </div>
 
         <div class="input-group">
@@ -224,11 +233,15 @@
         </div>
 
         <div class="input-group">
-            <label>Hosts (Labels & Names)</label>
-            <input type="text" id="input-host1-label" oninput="updateField('host1-label', this.value)" placeholder="Host Label 1">
-            <input type="text" id="input-host1-name" oninput="updateField('host1-name', this.value)" placeholder="Host Name 1">
-            <input type="text" id="input-host2-label" oninput="updateField('host2-label', this.value)" placeholder="Host Label 2">
-            <input type="text" id="input-host2-name" oninput="updateField('host2-name', this.value)" placeholder="Host Name 2">
+            <label>Hosts & Special Guest</label>
+            <div class="host-input-row">
+                <span id="label-host1-fixed" class="fixed-label">Organized By:</span>
+                <input type="text" id="input-host1-name" oninput="updateField('host1-name', this.value)" placeholder="Host Name">
+            </div>
+            <div class="host-input-row">
+                <span id="label-host2-fixed" class="fixed-label">Special Guest:</span>
+                <input type="text" id="input-host2-name" oninput="updateField('host2-name', this.value)" placeholder="Guest Name">
+            </div>
         </div>
 
         <div class="share-actions">
@@ -247,6 +260,7 @@
     <button id="edit-toggle" onclick="toggleHostPanel()">Edit Your Card</button>
 
     <div id="bg-animations" class="bg-animations"></div>
+    <div id="bg-animations"></div>
     <script src="script.js"></script>
 </body>
 </html>

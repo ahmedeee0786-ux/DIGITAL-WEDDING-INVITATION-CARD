@@ -9,13 +9,15 @@ let cardData = {
     groomName: 'Groom Name',
     brideName: 'Bride Name',
     targetDate: "2026-04-24T14:00",
-    event1: { title: 'سہرا بندی', date: '2026-04-23', time: 'At 1:00 AM' },
-    event2: { title: 'بارات', date: '2026-04-23', time: 'At 2:00 AM' },
-    event3: { title: 'ولیمہ', date: '2026-04-24', time: 'At 2:00 AM', location: 'Shadi Hall / Marquee Name', mapUrl: '' },
-    host1: { label: 'زیرِ اہتمام', name: 'Host Name' },
-    host2: { label: 'خصوصی شرکت (والدِ عروس)', name: 'Special Guest Name' },
+    event1: { date: '2026-04-23', time: 'At 1:00 AM' },
+    event2: { date: '2026-04-23', time: 'At 2:00 AM' },
+    event3: { date: '2026-04-24', time: 'At 2:00 AM', location: 'Shadi Hall / Marquee Name', mapUrl: '' },
+    host1: { name: 'Host Name' },
+    host2: { name: 'Special Guest Name' },
     hostWhatsapp: '+920000000000'
 };
+
+let additionalEvents = [];
 
 const UI_LABELS = {
     ur: {
@@ -30,7 +32,9 @@ const UI_LABELS = {
         rsvp: "براہ کرم RSVP کریں",
         rsvpSub: "براہ کرم ہمیں بتائیں کہ کیا آپ آ رہے ہیں!",
         rsvpYes: "میں آ رہا ہوں", rsvpMaybe: "شاید", rsvpNo: "معذرت",
-        celebrationStarted: "جشن شروع ہو چکا ہے!"
+        celebrationStarted: "جشن شروع ہو چکا ہے!",
+        e1: 'سہرا بندی', e2: 'بارات', e3: 'ولیمہ', 
+        h1: 'زیرِ اہتمام:', h2: 'خصوصی شرکت (والدِ عروس):'
     },
     en: {
         welcome: "Warmest Welcome, ",
@@ -44,7 +48,9 @@ const UI_LABELS = {
         rsvp: "Kindly RSVP",
         rsvpSub: "Please let us know if you're coming!",
         rsvpYes: "I am coming", rsvpMaybe: "Maybe", rsvpNo: "Cannot attend",
-        celebrationStarted: "The Celebration has Begun!"
+        celebrationStarted: "The Celebration has Begun!",
+        e1: 'Sehra Bandi', e2: 'Baraat', e3: 'Walima', 
+        h1: 'Organized By:', h2: 'Special Guest:'
     }
 };
 
@@ -77,10 +83,10 @@ function openCard() {
 
 const DATA_KEYS = [
     'theme', 'music', 'lang', 'guestName', 'groomName', 'brideName', 'targetDate',
-    'event1.title', 'event1.date', 'event1.time',
-    'event2.title', 'event2.date', 'event2.time',
-    'event3.title', 'event3.date', 'event3.time', 'event3.location', 'event3.mapUrl',
-    'host1.label', 'host1.name', 'host2.label', 'host2.name', 'hostWhatsapp'
+    'event1.date', 'event1.time',
+    'event2.date', 'event2.time',
+    'event3.date', 'event3.time', 'event3.location', 'event3.mapUrl',
+    'host1.name', 'host2.name', 'hostWhatsapp'
 ];
 
 function initApp() {
@@ -89,7 +95,9 @@ function initApp() {
         try {
             const encodedData = hash.substring(4);
             const decodedStr = decodeURIComponent(escape(atob(encodedData)));
-            const parts = decodedStr.split('|');
+            const mainParts = decodedStr.split('|||');
+            const parts = mainParts[0].split('|');
+            
             cardData.theme = parts[0] || cardData.theme;
             cardData.music = parts[1] || cardData.music;
             cardData.lang = parts[2] || cardData.lang;
@@ -97,25 +105,26 @@ function initApp() {
             cardData.groomName = parts[4] || cardData.groomName;
             cardData.brideName = parts[5] || cardData.brideName;
             cardData.targetDate = parts[6] || cardData.targetDate;
-            cardData.event1 = { title: parts[7], date: parts[8], time: parts[9] };
-            cardData.event2 = { title: parts[10], date: parts[11], time: parts[12] };
-            cardData.event3 = { title: parts[13], date: parts[14], time: parts[15], location: parts[16], mapUrl: parts[17] };
-            cardData.host1 = { label: parts[18], name: parts[19] };
-            cardData.host2 = { label: parts[20], name: parts[21] };
-            cardData.hostWhatsapp = parts[22] || cardData.hostWhatsapp;
+            cardData.event1 = { date: parts[7], time: parts[8] };
+            cardData.event2 = { date: parts[9], time: parts[10] };
+            cardData.event3 = { date: parts[11], time: parts[12], location: parts[13], mapUrl: parts[14] };
+            cardData.host1 = { name: parts[15] };
+            cardData.host2 = { name: parts[16] };
+            cardData.hostWhatsapp = parts[17] || cardData.hostWhatsapp;
+
+            if (mainParts[1]) {
+                additionalEvents = JSON.parse(mainParts[1]);
+            }
+
             document.body.classList.add('guest-mode');
         } catch (e) { console.error("Failed to decode guest link", e); }
-    } else { document.body.classList.remove('guest-mode'); loadHostInputs(); }
+    } else { 
+        document.body.classList.remove('guest-mode'); 
+        loadHostInputs(); 
+        renderAdditionalEventsInputs();
+    }
     applyCardData();
     initBackground();
-}
-
-function formatFriendlyDate(dateStr) {
-    if (!dateStr) return '';
-    const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return dateStr;
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    return d.toLocaleDateString(cardData.lang === 'ur' ? 'ur-PK' : 'en-US', options);
 }
 
 function applyCardData() {
@@ -127,6 +136,14 @@ function applyCardData() {
     if (cardData.lang === 'ur') document.body.classList.add('urdu-font');
     else document.body.classList.remove('urdu-font');
 
+    // Update labels in Host Panel
+    if(document.getElementById('label-event1')) document.getElementById('label-event1').innerText = `Event 1 (${L.e1})`;
+    if(document.getElementById('label-event2')) document.getElementById('label-event2').innerText = `Event 2 (${L.e2})`;
+    if(document.getElementById('label-event3')) document.getElementById('label-event3').innerText = `Event 3 (${L.e3})`;
+    if(document.getElementById('label-host1-fixed')) document.getElementById('label-host1-fixed').innerText = L.h1;
+    if(document.getElementById('label-host2-fixed')) document.getElementById('label-host2-fixed').innerText = L.h2;
+
+    // Update UI Content
     if(document.getElementById('guest-welcome')) document.getElementById('guest-welcome').innerText = `${L.welcome}${cardData.guestName}!`;
     if(document.querySelector('.subtitle')) document.querySelector('.subtitle').innerText = L.together;
     if(document.querySelector('.quote')) document.querySelector('.quote').innerText = L.quote;
@@ -159,15 +176,15 @@ function applyCardData() {
     if(document.getElementById('inside-groom-name')) document.getElementById('inside-groom-name').innerText = cardData.groomName;
     if(document.getElementById('inside-bride-name')) document.getElementById('inside-bride-name').innerText = cardData.brideName;
     
-    if(document.getElementById('event1-title')) document.getElementById('event1-title').innerText = cardData.event1.title;
+    if(document.getElementById('event1-title')) document.getElementById('event1-title').innerText = L.e1;
     if(document.getElementById('event1-date')) document.getElementById('event1-date').innerText = formatFriendlyDate(cardData.event1.date);
     if(document.getElementById('event1-time')) document.getElementById('event1-time').innerText = cardData.event1.time;
     
-    if(document.getElementById('event2-title')) document.getElementById('event2-title').innerText = cardData.event2.title;
+    if(document.getElementById('event2-title')) document.getElementById('event2-title').innerText = L.e2;
     if(document.getElementById('event2-date')) document.getElementById('event2-date').innerText = formatFriendlyDate(cardData.event2.date);
     if(document.getElementById('event2-time')) document.getElementById('event2-time').innerText = cardData.event2.time;
     
-    if(document.getElementById('event3-title')) document.getElementById('event3-title').innerText = cardData.event3.title;
+    if(document.getElementById('event3-title')) document.getElementById('event3-title').innerText = L.e3;
     if(document.getElementById('event3-date')) document.getElementById('event3-date').innerText = formatFriendlyDate(cardData.event3.date);
     if(document.getElementById('event3-time')) document.getElementById('event3-time').innerText = cardData.event3.time;
     if(document.getElementById('event3-location')) document.getElementById('event3-location').innerText = cardData.event3.location;
@@ -175,16 +192,77 @@ function applyCardData() {
     const mapBtn = document.getElementById('map-button');
     if (mapBtn) { mapBtn.href = cardData.event3.mapUrl; mapBtn.style.display = cardData.event3.mapUrl ? 'inline-flex' : 'none'; }
 
-    if(document.getElementById('host1-label')) document.getElementById('host1-label').innerText = cardData.host1.label;
+    if(document.getElementById('host1-label')) document.getElementById('host1-label').innerText = L.h1;
     if(document.getElementById('host1-name')) document.getElementById('host1-name').innerText = cardData.host1.name;
-    if(document.getElementById('host2-label')) document.getElementById('host2-label').innerText = cardData.host2.label;
+    if(document.getElementById('host2-label')) document.getElementById('host2-label').innerText = L.h2;
     if(document.getElementById('host2-name')) document.getElementById('host2-name').innerText = cardData.host2.name;
+
+    renderAdditionalEvents();
 
     document.title = `Wedding Invitation | ${cardData.groomName}`;
     const ogTitle = document.getElementById('og-title');
     if (ogTitle) ogTitle.setAttribute('content', `Wedding Invitation | ${cardData.groomName}`);
 
     initCountdown();
+}
+
+function renderAdditionalEvents() {
+    const container = document.getElementById('additional-events-display');
+    if (!container) return;
+    container.innerHTML = '';
+    additionalEvents.forEach((ev, i) => {
+        const html = `
+            <div class="event-card animate-up" style="--delay: ${1.4 + (i * 0.2)}s">
+                <div class="event-icon">✨</div>
+                <h3 class="event-title">${ev.title}</h3>
+                <p class="date">${formatFriendlyDate(ev.date)}</p>
+                <p class="time">${ev.time}</p>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+function renderAdditionalEventsInputs() {
+    const container = document.getElementById('additional-events-container');
+    if (!container) return;
+    container.innerHTML = '';
+    additionalEvents.forEach((ev, i) => {
+        const div = document.createElement('div');
+        div.className = 'extra-event-input';
+        div.innerHTML = `
+            <input type="text" value="${ev.title}" oninput="updateExtraEvent(${i}, 'title', this.value)" placeholder="Event Title (e.g. Mehndi)">
+            <input type="date" value="${ev.date}" oninput="updateExtraEvent(${i}, 'date', this.value)">
+            <input type="text" value="${ev.time}" oninput="updateExtraEvent(${i}, 'time', this.value)" placeholder="Time">
+            <button class="remove-btn" onclick="removeExtraEvent(${i})">×</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function addExtraEvent() {
+    additionalEvents.push({ title: '', date: '', time: '' });
+    renderAdditionalEventsInputs();
+    applyCardData();
+}
+
+function updateExtraEvent(index, field, value) {
+    additionalEvents[index][field] = value;
+    applyCardData();
+}
+
+function removeExtraEvent(index) {
+    additionalEvents.splice(index, 1);
+    renderAdditionalEventsInputs();
+    applyCardData();
+}
+
+function formatFriendlyDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    return d.toLocaleDateString(cardData.lang === 'ur' ? 'ur-PK' : 'en-US', options);
 }
 
 function formatForDatePicker(dateStr) {
@@ -206,20 +284,15 @@ function loadHostInputs() {
         'input-groom-name': cardData.groomName,
         'input-bride-name': cardData.brideName,
         'input-targetDate': formatForDatePicker(cardData.targetDate),
-        'input-event1-title': cardData.event1.title,
         'input-event1-date': formatForDatePicker(cardData.event1.date),
         'input-event1-time': cardData.event1.time,
-        'input-event2-title': cardData.event2.title,
         'input-event2-date': formatForDatePicker(cardData.event2.date),
         'input-event2-time': cardData.event2.time,
-        'input-event3-title': cardData.event3.title,
         'input-event3-date': formatForDatePicker(cardData.event3.date),
         'input-event3-time': cardData.event3.time,
         'input-event3-location': cardData.event3.location,
         'input-event3-mapUrl': cardData.event3.mapUrl,
-        'input-host1-label': cardData.host1.label,
         'input-host1-name': cardData.host1.name,
-        'input-host2-label': cardData.host2.label,
         'input-host2-name': cardData.host2.name,
         'input-host-whatsapp': cardData.hostWhatsapp
     };
@@ -228,23 +301,7 @@ function loadHostInputs() {
 
 function updateField(id, value) {
     if (id === 'music') cardData.music = value;
-    if (id === 'lang') {
-        cardData.lang = value;
-        if (value === 'en') {
-            if (cardData.event1.title === 'سہرا بندی') cardData.event1.title = 'Sehra Bandi';
-            if (cardData.event2.title === 'بارات') cardData.event2.title = 'Baraat';
-            if (cardData.event3.title === 'ولیمہ') cardData.event3.title = 'Walima';
-            if (cardData.host1.label === 'زیرِ اہتمام') cardData.host1.label = 'Organized By';
-            if (cardData.host2.label === 'خصوصی شرکت (والدِ عروس)') cardData.host2.label = 'Special Guest';
-        } else {
-            if (cardData.event1.title === 'Sehra Bandi') cardData.event1.title = 'سہرا بندی';
-            if (cardData.event2.title === 'Baraat') cardData.event2.title = 'بارات';
-            if (cardData.event3.title === 'Walima') cardData.event3.title = 'ولیمہ';
-            if (cardData.host1.label === 'Organized By') cardData.host1.label = 'زیرِ اہتمام';
-            if (cardData.host2.label === 'Special Guest') cardData.host2.label = 'خصوصی شرکت (والدِ عروس)';
-        }
-        loadHostInputs();
-    }
+    if (id === 'lang') { cardData.lang = value; applyCardData(); }
     if (id === 'guestName') cardData.guestName = value;
     if (id === 'groomName') cardData.groomName = value;
     if (id === 'brideName') cardData.brideName = value;
@@ -267,8 +324,9 @@ function generateGuestLink() {
         parts.forEach(p => { if (val) val = val[p]; });
         return val || '';
     });
-    const flatStr = packedData.join('|');
-    const encoded = btoa(unescape(encodeURIComponent(flatStr)));
+    const mainStr = packedData.join('|');
+    const finalStr = mainStr + '|||' + JSON.stringify(additionalEvents);
+    const encoded = btoa(unescape(encodeURIComponent(finalStr)));
     return `${window.location.origin}${window.location.pathname}#v2-${encoded}`;
 }
 
