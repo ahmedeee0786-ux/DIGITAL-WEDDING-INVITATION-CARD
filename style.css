@@ -80,6 +80,132 @@ body.theme-copper {
     --card-bg: rgba(61, 28, 28, 0.95);
 }
 
+body.theme-violet {
+    --primary-bg: #2e1065;
+    --primary-bg-light: #4c1d95;
+    --accent-color: #e2e8f0;
+    --text-main: #ffffff;
+    --text-accent: #cbd5e1;
+    --card-bg: rgba(46, 16, 101, 0.95);
+}
+
+body.theme-forest {
+    --primary-bg: #064e3b;
+    --primary-bg-light: #065f46;
+    --accent-color: #fef3c7;
+    --text-main: #ffffff;
+    --text-accent: #fcd34d;
+    --card-bg: rgba(6, 78, 59, 0.95);
+}
+
+body.theme-ruby {
+    --primary-bg: #7f1d1d;
+    --primary-bg-light: #991b1b;
+    --accent-color: #fbbf24;
+    --text-main: #ffffff;
+    --text-accent: #f59e0b;
+    --card-bg: rgba(127, 29, 29, 0.95);
+}
+
+body.theme-saffron {
+    --primary-bg: #7c2d12;
+    --primary-bg-light: #9a3412;
+    --accent-color: #fdba74;
+    --text-main: #ffffff;
+    --text-accent: #f97316;
+    --card-bg: rgba(124, 45, 18, 0.95);
+}
+
+body.theme-plum {
+    --primary-bg: #4c1d44;
+    --primary-bg-light: #701a75;
+    --accent-color: #fbcfe8;
+    --text-main: #ffffff;
+    --text-accent: #f472b6;
+    --card-bg: rgba(76, 29, 68, 0.95);
+}
+
+body.theme-charcoal {
+    --primary-bg: #1c1c1c;
+    --primary-bg-light: #2d2d2d;
+    --accent-color: #cd7f32;
+    --text-main: #ffffff;
+    --text-accent: #d4af37;
+    --card-bg: rgba(28, 28, 28, 0.95);
+}
+
+body.theme-navy {
+    --primary-bg: #0c1b33;
+    --primary-bg-light: #1a3a6d;
+    --accent-color: #e2c044;
+    --text-main: #ffffff;
+    --text-accent: #f4d35e;
+    --card-bg: rgba(12, 27, 51, 0.95);
+}
+
+body.theme-orange {
+    --primary-bg: #431407;
+    --primary-bg-light: #7c2d12;
+    --accent-color: #fdba74;
+    --text-main: #ffffff;
+    --text-accent: #fb923c;
+    --card-bg: rgba(67, 20, 7, 0.95);
+}
+
+body.theme-dusty-rose {
+    --primary-bg: #4c1d1d;
+    --primary-bg-light: #7f1d1d;
+    --accent-color: #fce7f3;
+    --text-main: #ffffff;
+    --text-accent: #f9a8d4;
+    --card-bg: rgba(76, 29, 29, 0.95);
+}
+
+body.theme-olive {
+    --primary-bg: #365314;
+    --primary-bg-light: #4d7c0f;
+    --accent-color: #ecfccb;
+    --text-main: #ffffff;
+    --text-accent: #bef264;
+    --card-bg: rgba(54, 83, 20, 0.95);
+}
+
+body.theme-indigo {
+    --primary-bg: #1e1b4b;
+    --primary-bg-light: #312e81;
+    --accent-color: #e0e7ff;
+    --text-main: #ffffff;
+    --text-accent: #c7d2fe;
+    --card-bg: rgba(30, 27, 75, 0.95);
+}
+
+body.theme-sand {
+    --primary-bg: #451a03;
+    --primary-bg-light: #78350f;
+    --accent-color: #fde68a;
+    --text-main: #ffffff;
+    --text-accent: #fbbf24;
+    --card-bg: rgba(69, 26, 3, 0.95);
+}
+
+body.theme-teal-light {
+    --primary-bg: #f0fdfa;
+    --primary-bg-light: #ccfbf1;
+    --accent-color: #0f766e;
+    --text-main: #134e4a;
+    --text-accent: #0f766e;
+    --card-bg: rgba(240, 253, 250, 0.98);
+}
+
+body.theme-gold-royal {
+    --primary-bg: #451a03;
+    --primary-bg-light: #78350f;
+    --accent-color: #fcd34d;
+    --text-main: #ffffff;
+    --text-accent: #fbbf24;
+    --card-bg: rgba(69, 26, 3, 0.95);
+}
+
 /* THE "CUTE & BEAUTIFUL" 3D OPENING ANIMATION SYSTEM */
 .container {
     perspective: 2500px; /* High perspective for deep 3D effect */
@@ -564,12 +690,14 @@ body {
 }
 
 .request-text {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.7;
     text-align: center;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-main);
+    opacity: 0.85;
     margin-bottom: 2.5rem;
     font-style: italic;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .event-details {
@@ -1012,6 +1140,20 @@ body {
 .swatch.vintage { background: #fdf5e6; border: 1px solid #5d4037; }
 .swatch.royal-blue { background: #002366; border: 1px solid #ffd700; }
 .swatch.copper { background: #3d1c1c; border: 1px solid #b87333; }
+.swatch.violet { background: #2e1065; }
+.swatch.forest { background: #064e3b; }
+.swatch.ruby { background: #7f1d1d; }
+.swatch.saffron { background: #7c2d12; }
+.swatch.plum { background: #4c1d44; }
+.swatch.charcoal { background: #1c1c1c; }
+.swatch.navy { background: #0c1b33; }
+.swatch.orange { background: #431407; }
+.swatch.dusty-rose { background: #4c1d1d; }
+.swatch.olive { background: #365314; }
+.swatch.indigo { background: #1e1b4b; }
+.swatch.sand { background: #451a03; }
+.swatch.teal-light { background: #f0fdfa; border: 1px solid #0f766e; }
+.swatch.gold-royal { background: #451a03; border: 1px solid #fcd34d; }
 
 .action-btn {
     margin-top: auto;
