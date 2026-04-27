@@ -1455,3 +1455,78 @@ body {
     border-radius: 6px;
     border: 1px solid rgba(196, 163, 90, 0.1);
 }
+
+/* DECORATIVE HANGING LIGHTS */
+.lighting-strips {
+    position: fixed;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10;
+    display: flex;
+    justify-content: space-around;
+}
+
+.lighting-strips.left { left: 50px; }
+.lighting-strips.right { right: 50px; }
+
+.light-string {
+    position: relative;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.bulb {
+    width: 14px;
+    height: 22px;
+    background: #ffd700;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    margin: 25px 0;
+    position: relative;
+    box-shadow: 0 0 15px #ffd700;
+    animation: glitter 4s infinite ease-in-out alternate;
+    filter: blur(0.3px);
+}
+
+.bulb::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #333;
+    border-radius: 2px;
+}
+
+@keyframes glitter {
+    0% { 
+        opacity: 0.3; 
+        transform: scale(0.85); 
+        box-shadow: 0 0 5px #ffd700;
+        background: #ffcc00;
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+        box-shadow: 0 0 25px #ffd700, 0 0 50px rgba(255, 215, 0, 0.4);
+    }
+    100% { 
+        opacity: 1; 
+        transform: scale(1); 
+        box-shadow: 0 0 20px #ffd700, 0 0 40px rgba(255, 215, 0, 0.6);
+        background: #fff;
+    }
+}
+
+@media (max-width: 1024px) {
+    .lighting-strips {
+        display: none;
+    }
+}
