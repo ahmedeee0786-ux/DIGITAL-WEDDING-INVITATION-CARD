@@ -14,7 +14,8 @@ let cardData = {
     event3: { date: '2026-04-24', time: 'At 2:00 AM', location: 'Shadi Hall / Marquee Name', mapUrl: '' },
     host1: { name: 'Host Name' },
     host2: { name: 'Special Guest Name' },
-    hostWhatsapp: '+920000000000'
+    hostWhatsapp: '+920000000000',
+    webhookUrl: ''
 };
 
 let additionalEvents = [];
@@ -79,6 +80,34 @@ function openCard() {
         music.src = `music${cardData.music}.mp3`;
         music.play().then(() => { isMusicPlaying = true; if (musicBtn) musicBtn.classList.add('playing'); }).catch(e => console.log("Autoplay prevented:", e));
     }
+    triggerWebhook();
+}
+
+function triggerWebhook() {
+    if (!cardData.webhookUrl || !cardData.webhookUrl.startsWith('http')) return;
+    
+    // Only trigger once per session
+    if (window.sessionStorage.getItem('notified')) return;
+    window.sessionStorage.setItem('notified', 'true');
+
+    const payload = {
+        embeds: [{
+            title: "🔔 New Guest Opened Card!",
+            color: 16762624, // Gold
+            fields: [
+                { name: "Guest Name", value: cardData.guestName, inline: true },
+                { name: "Couple", value: `${cardData.groomName} & ${cardData.brideName}`, inline: true },
+                { name: "Time", value: new Date().toLocaleString(), inline: false }
+            ],
+            footer: { text: "Sent via Digital Wedding Invitation Card" }
+        }]
+    };
+
+    fetch(cardData.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(e => console.error("Webhook failed:", e));
 }
 
 const DATA_KEYS = [
@@ -86,7 +115,7 @@ const DATA_KEYS = [
     'event1.date', 'event1.time',
     'event2.date', 'event2.time',
     'event3.date', 'event3.time', 'event3.location', 'event3.mapUrl',
-    'host1.name', 'host2.name', 'hostWhatsapp'
+    'host1.name', 'host2.name', 'hostWhatsapp', 'webhookUrl'
 ];
 
 function initApp() {
@@ -111,6 +140,7 @@ function initApp() {
             cardData.host1 = { name: parts[15] };
             cardData.host2 = { name: parts[16] };
             cardData.hostWhatsapp = parts[17] || cardData.hostWhatsapp;
+            cardData.webhookUrl = parts[18] || '';
 
             if (mainParts[1]) {
                 additionalEvents = JSON.parse(mainParts[1]);
@@ -294,7 +324,8 @@ function loadHostInputs() {
         'input-event3-mapUrl': cardData.event3.mapUrl,
         'input-host1-name': cardData.host1.name,
         'input-host2-name': cardData.host2.name,
-        'input-host-whatsapp': cardData.hostWhatsapp
+        'input-host-whatsapp': cardData.hostWhatsapp,
+        'input-webhookUrl': cardData.webhookUrl
     };
     for (let id in fields) { if(document.getElementById(id)) document.getElementById(id).value = fields[id]; }
 }
@@ -314,6 +345,7 @@ function updateField(id, value) {
         if (id === 'hostWhatsapp') cardData.hostWhatsapp = value;
         else { const parts = id.split('-'); cardData[parts[0]][parts[1]] = value; }
     }
+    if (id === 'webhookUrl') cardData.webhookUrl = value;
     applyCardData();
 }
 
